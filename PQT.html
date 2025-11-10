@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pham Quang Thang | Network Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    /* Theme Variables */
+    :root {
+      --bg-light: #121212;
+      --bg-dark: #1e1e1e;
+      --accent: #00D8FF;
+      --accent-hover: #009ECC;
+      --text-primary: #E0E0E0;
+      --text-secondary: #A0A0A0;
+      --border: rgba(255, 255, 255, 0.1);
+      --section-padding: 100px;
+      --card-shadow: 0 4px 16px rgba(0,0,0,0.5);
+      --transition: all 0.3s ease;
+    }
+
+    /* Reset & Base */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-light);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    
+    /* ======== CSS ĐỂ CHÈN ẢNH CÁ NHÂN ======== */
+    .light-theme {
+      --bg-light: #f4f4f4;
+      --bg-dark: #ffffff;
+      --text-primary: #333333;
+      --text-secondary: #555555;
+      --border: rgba(0, 0, 0, 0.1);
+      --card-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+    .profile-pic {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid var(--accent);
+        margin-bottom: 30px;
+        box-shadow: 0 0 20px rgba(0, 216, 255, 0.3);
+    }
+    /* ======================================= */
+
+    /* Layout */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 30px;
+    }
+    section, footer {
+      padding: var(--section-padding) 0;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    section.visible, footer.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    section:nth-child(even) {
+      background: var(--bg-dark);
+    }
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(18, 18, 18, 0.8);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+    }
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 70px;
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .nav { list-style: none; display: flex; }
+    .nav li { margin-left: 30px; }
+    .nav a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-weight: 500;
+      transition: var(--transition);
+    }
+    .nav a:hover, .nav a.active { color: var(--text-primary); }
+    .theme-toggle {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .theme-toggle:hover { color: var(--accent); }
+    .mobile-menu { display: none; }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      padding-top: 70px; /* Header height */
+    }
+    .hero h1 {
+      font-size: 3.5rem;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+    }
+    .hero .subtitle {
+      font-size: 1.5rem;
+      color: var(--accent);
+      margin-bottom: 30px;
+      font-weight: 400;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin: 0 auto 40px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      padding: 12px 25px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #121212;
+    }
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-3px);
+    }
+    .btn-secondary {
+      background: transparent;
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      margin-left: 15px;
+    }
+    .btn-secondary:hover {
+      background: var(--accent);
+      color: #121212;
+      transform: translateY(-3px);
+    }
+    
+    /* General Section Styling */
+    .section-title {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 60px;
+      color: var(--text-primary);
+    }
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 4px;
+      background: var(--accent);
+      margin: 10px auto 0;
+    }
+
+    /* About */
+    #about { text-align: center; }
+    #about .container {
+      max-width: 800px;
+    }
+    #about p {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+    #about .contact-info {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 30px;
+        margin-top: 30px;
+    }
+    #about .contact-info li {
+        font-size: 1rem;
+    }
+    #about .contact-info i {
+        margin-right: 10px;
+        color: var(--accent);
+    }
+
+    /* Experience (Timeline) */
+    .timeline {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .timeline::after {
+      content: '';
+      position: absolute;
+      width: 2px;
+      background: var(--border);
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      margin-left: -1px;
+    }
+    .timeline-item {
+      padding: 20px 40px;
+      position: relative;
+      width: 50%;
+    }
+    .timeline-item:nth-child(odd) {
+      left: 0;
+      text-align: right;
+    }
+    .timeline-item:nth-child(even) {
+      left: 50%;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background: var(--bg-light);
+      border: 4px solid var(--accent);
+      border-radius: 50%;
+      top: 25px;
+      z-index: 1;
+    }
+    .timeline-item:nth-child(odd)::before {
+      right: -8px;
+    }
+    .timeline-item:nth-child(even)::before {
+      left: -8px;
+    }
+    .timeline-content {
+      background: var(--bg-dark);
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: var(--card-shadow);
+      border: 1px solid var(--border);
+    }
+    .timeline-content h3 {
+      font-size: 1.3rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .timeline-content .date {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      margin-bottom: 15px;
+    }
+    .timeline-content p {
+      color: var(--text-secondary);
+    }
+    .timeline-content ul {
+        list-style-position: inside;
+        color: var(--text-secondary);
+        margin-top: 15px;
+        padding-left: 10px;
+    }
+    .timeline-content ul li {
+        margin-bottom: 5px;
+    }
+
+
+    /* Projects */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+    }
+    .card {
+      background: var(--bg-dark);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 30px rgba(0, 216, 255, 0.2);
+    }
+    .card-content {
+      padding: 30px;
+    }
+    .card-content h3 {
+      font-size: 1.5rem;
+      color: var(--text-primary);
+      margin-bottom: 15px;
+    }
+    .card-content p {
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+    .card-content .tags {
+      margin-bottom: 20px;
+    }
+    .card-content .tag {
+      display: inline-block;
+      background: var(--bg-light);
+      color: var(--text-secondary);
+      padding: 5px 12px;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      margin: 2px;
+    }
+    .card-content .links a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      margin-right: 15px;
+    }
+    .card-content .links a:hover {
+      color: var(--accent-hover);
+    }
+
+    /* Skills */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+    }
+    .skill-category {
+      background: var(--bg-dark);
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: var(--card-shadow);
+      border: 1px solid var(--border);
+    }
+    .skill-category h3 {
+      font-size: 1.3rem;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .skill-category ul {
+      list-style: none;
+    }
+    .skill-category li {
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+    }
+    .skill-category i {
+      margin-right: 10px;
+      width: 15px;
+    }
+
+    /* Certificates (List) */
+    .cert-list {
+        list-style: none;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    .cert-list li {
+        background: var(--bg-dark);
+        padding: 20px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border-left: 4px solid var(--accent);
+        font-size: 1rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+    .cert-list strong {
+        color: var(--text-primary);
+    }
+
+    /* Education */
+    .education-item {
+        background: var(--bg-dark);
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: var(--card-shadow);
+        border: 1px solid var(--border);
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .education-item h3 {
+        color: var(--accent);
+        font-size: 1.5rem;
+    }
+    .education-item p {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        margin-top: 10px;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--bg-dark);
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+    footer h2 {
+      font-size: 2rem;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+    }
+    footer p {
+      color: var(--text-secondary);
+      margin-bottom: 30px;
+    }
+    .social-links {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+    .social-links a {
+      color: var(--text-secondary);
+      font-size: 1.8rem;
+      transition: var(--transition);
+    }
+    .social-links a:hover {
+      color: var(--accent);
+      transform: translateY(-5px);
+    }
+    footer .copyright {
+      font-size: 0.9rem;
+      color: #777;
+      border-top: 1px solid var(--border);
+      padding-top: 30px;
+      margin-top: 30px;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 100%;
+        height: 100vh;
+        background: var(--bg-light);
+        flex-direction: column;
+        align-items: center;
+        padding-top: 50px;
+        transition: var(--transition);
+      }
+      .nav.active { left: 0; }
+      .nav li { margin: 20px 0; }
+      .mobile-menu {
+        display: block;
+        background: none;
+        border: none;
+        color: var(--text-secondary);
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+      .hero h1 { font-size: 2.5rem; }
+      .hero .subtitle { font-size: 1.2rem; }
+      .section-title { font-size: 2rem; }
+      
+      .timeline::after { left: 31px; }
+      .timeline-item { width: 100%; padding-left: 70px; padding-right: 25px; }
+      .timeline-item:nth-child(odd) { left: 0; text-align: left; }
+      .timeline-item:nth-child(even) { left: 0; }
+      .timeline-item::before { left: 23px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <a href="#hero" class="logo">PHAM QUANG THANG</a>
+      <nav class="nav">
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#certificates">Certificates</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#education">Education</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <button class="theme-toggle">
+        <i class="fas fa-moon"></i>
+      </button>
+      </div>
+  </header>
+
+  <section class="hero" id="hero">
+    <div class="container">
+      <h1>PHAM QUANG THANG</h1>
+      <p class="subtitle">Network Administration Student & Presales Intern</p>
+      <p>
+        During my internship, I aim to practice and enhance my professional skills, especially in areas such as computer networking and penetration testing. 
+        I also expect to directly participate in real-world tasks to gain a deeper understanding of operational processes in a professional IT environment. 
+        Furthermore, I hope to have the opportunity to become a full-time employee, thereby contributing to the company’s overall growth.
+      </p>
+      <a href="#projects" class="btn btn-primary">View My Projects</a>
+      <a href="#certificates" class="btn btn-secondary">View My Certificates</a>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title">About Me</h2>
+      <img src="PQT.jpg" alt="Pham Quang Thang" class="profile-pic">
+      <p>
+        I am a dedicated student pursuing a degree in Network Administration with hands-on experience as a Presales Intern and Teaching Assistant. 
+        I am passionate about network design, security, and gaining practical skills in real-world IT environments.
+      </p>
+      <ul class="contact-info">
+        <li><i class="fas fa-envelope"></i> thangpq1611@gmail.com</li>
+        <li><i class="fas fa-phone"></i> 0986462101</li>
+        <li><i class="fas fa-map-marker-alt"></i> Nam Tu Liem, Ha Noi</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="container">
+      <h2 class="section-title">Work Experience</h2>
+      <div class="timeline">
+        
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <h3>Presales Intern</h3>
+            <div class="date">09/2025 – 09/2026 | AZT VIET NAM TECHNOLOGY</div>
+            <ul>
+                <li>Assisted in preparing and reviewing bidding documents.</li>
+                <li>Participated in tender projects, including document preparation and submission.</li>
+                <li>Involved in designing Data Center architecture.</li>
+                <li>Led a team of interns to design, configure, and deploy the company’s internal network.</li>
+                <li>Configured Routers, Layer 3 Switches, Firewalls, Access Points, and Servers.</li>
+                <li>Installed and managed IP Camera system.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <h3>Teaching Assistant - CCNA Course</h3>
+            <div class="date">05/2025 - Present | Lecturer: Nguyen Tran Thanh</div>
+            <ul>
+                <li>Assisted and answered questions for students.</li>
+                <li>Guided students on configuring Labs during the course.</li>
+                <li>Supported the lecturer in building Lab exercises.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <h3>Teaching Assistant - AI Training Course</h3>
+            <div class="date">08/2025 | Lecturer: Nguyen Tran Thanh</div>
+            <ul>
+                <li>Assisted in installing AI applications for Hai Phong customs officers.</li>
+                <li>Supported in creating prompts and familiarizing staff with AI.</li>
+                <li>Helped answer questions for customs officers.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="container">
+      <h2 class="section-title">Projects</h2>
+      <div class="project-grid">
+        <div class="card">
+          <div class="card-content">
+            <h3>Network System Design for Electric Power University</h3>
+            <p>
+              A simulation project to design and implement a simple yet highly efficient network system, 
+              including a backup network path to ensure continuous operation.
+            </p>
+            <div class="tags">
+              <span class="tag">VLAN</span>
+              <span class="tag">IPv4</span>
+              <span class="tag">DHCP Server</span>
+              <span class="tag">OSPF</span>
+              <span class="tag">WLC + AP</span>
+              <span class="tag">FTP</span>
+              <span class="tag">SNMP</span>
+              <span class="tag">Cisco Packet Tracer</span>
+              <span class="tag">EtherChannel</span>
+              <span class="tag">Syslog</span>
+            </div>
+            <div class="links">
+              <a href="https://github.com/iampqt/TKHT" target="_blank">
+                <i class="fab fa-github"></i> View on GitHub (TKHT)
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        </div>
+    </div>
+  </section>
+
+  <section id="certificates">
+    <div class="container">
+      <h2 class="section-title">Certificates</h2>
+      <ul class="cert-list">
+        <li><strong>Oracle Cloud Infrastructure 2025 Certified Generative AI Professional</strong> (2025)</li>
+        <li><strong>Oracle Cloud Infrastructure 2025 Certified AI Foundations Associate</strong> (2025)</li>
+        <li><strong>Oracle AI Vector Search Certified Professional</strong> (2025)</li>
+        <li><strong>Completed CEH course</strong> - IPMAC (2025)</li>
+        <li><strong>Completed CCNA course</strong> - IPMAC (2024)</li>
+        <li><strong>IELTS: 5.5</strong> (2021)</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="container">
+      <h2 class="section-title">Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-category">
+          <h3><i class="fas fa-network-wired"></i> Technical Skills</h3>
+          <ul>
+            <li><i class="fas fa-check"></i>Pentest Tools (Nmap, Metasploit, Dirsearch)</li>
+            <li><i class="fas fa-check"></i>Simulation (Cisco Packet Tracer, Pnetlab)</li>
+            <li><i class="fas fa-check"></i>Device Configuration (CLI, Website)</li>
+            <li><i class="fas fa-check"></i>Basic C++</li>
+          </ul>
+        </div>
+        <div class="skill-category">
+          <h3><i class="fas fa-users"></i> Soft Skills</h3>
+          <ul>
+            <li><i class="fas fa-check"></i>Communication Skills</li>
+            <li><i class="fas fa-check"></i>Teamwork and Collaboration</li>
+          </ul>
+        </div>
+        <div class="skill-category">
+          <h3><i class="fas fa-globe"></i> Languages</h3>
+          <ul>
+            <li><i class="fas fa-check"></i>English (Basic, able to read documents)</li>
+            <li><i class="fas fa-check"></i>Vietnamese (Native)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="container">
+      <h2 class="section-title">Education</h2>
+      <div class="education-item">
+        <h3>Electric Power University, Ha Noi</h3>
+        <p><strong>Major:</strong> Network Administration</p>
+        <p><strong>Expected Graduation:</strong> 2026</p>
+        <p><strong>GPA:</strong> 3.0 / 4.0</p>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div class="container">
+      <h2>Get In Touch</h2>
+      <p>I'm currently open to new opportunities. Feel free to contact me!</p>
+      <ul class="social-links">
+        <li>
+          <a href="https://github.com/iampqt/TKHT" target="_blank" title="GitHub">
+            <i class="fab fa-github"></i>
+          </a>
+        </li>
+        <li>
+          <a href="mailto:thangpq1611@gmail.com" title="Email">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </li>
+        <li>
+          <a href="tel:0986462101" title="Phone">
+            <i class="fas fa-phone"></i>
+          </a>
+        </li>
+      </ul>
+      <p class="copyright">
+        &copy; 2025 Pham Quang Thang. Built from template, customized with Gemini.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Smooth scrolling
+      document.querySelectorAll('.nav a').forEach(a => {
+        a.addEventListener('click', function(e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+          if(document.querySelector('.nav').classList.contains('active')) {
+            document.querySelector('.nav').classList.remove('active');
+          }
+        });
+      });
+
+      // Reveal sections on scroll
+      const sections = document.querySelectorAll('section, footer');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      sections.forEach(s => observer.observe(s));
+
+      // Theme Toggle
+      const themeToggle = document.querySelector('.theme-toggle');
+      const body = document.body;
+      themeToggle.addEventListener('click', () => {
+        body.classList.toggle('light-theme');
+        const icon = themeToggle.querySelector('i');
+        icon.classList.toggle('fa-moon');
+        icon.classList.toggle('fa-sun');
+      });
+
+      // Mobile Menu
+      const createMobileMenu = () => {
+        const header = document.querySelector('header .container');
+        const nav = document.querySelector('.nav');
+        const mobileMenuBtn = document.createElement('button');
+        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        mobileMenuBtn.className = 'mobile-menu';
+        // Sửa lỗi: chèn vào trước nút theme
+        header.insertBefore(mobileMenuBtn, document.querySelector('.theme-toggle'));
+
+        mobileMenuBtn.addEventListener('click', () => {
+          nav.classList.toggle('active');
+          const icon = mobileMenuBtn.querySelector('i');
+          icon.classList.toggle('fa-bars');
+          icon.classList.toggle('fa-times');
+        });
+      };
+      
+      // Xử lý logic mobile menu chính xác hơn
+      const handleMobileMenu = () => {
+          if (window.innerWidth <= 768 && !document.querySelector('.mobile-menu')) {
+              createMobileMenu();
+          } else if (window.innerWidth > 768 && document.querySelector('.mobile-menu')) {
+              document.querySelector('.mobile-menu').remove();
+              document.querySelector('.nav').classList.remove('active');
+          }
+      };
+      
+      handleMobileMenu(); // Chạy khi tải trang
+      window.addEventListener('resize', handleMobileMenu); // Chạy khi thay đổi kích thước
+
+    });
+  </script>
+</body>
+</html>
