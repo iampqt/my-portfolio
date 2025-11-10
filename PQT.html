@@ -31,7 +31,6 @@
       line-height: 1.7;
     }
     
-    /* ======== CSS ĐỂ CHÈN ẢNH CÁ NHÂN ======== */
     .light-theme {
       --bg-light: #f4f4f4;
       --bg-dark: #ffffff;
@@ -49,7 +48,6 @@
         margin-bottom: 30px;
         box-shadow: 0 0 20px rgba(0, 216, 255, 0.3);
     }
-    /* ======================================= */
 
     /* Layout */
     .container {
@@ -93,16 +91,31 @@
       font-weight: 700;
       color: var(--accent);
       text-decoration: none;
+      flex-shrink: 0; /* Không cho logo bị co lại */
     }
-    .nav { list-style: none; display: flex; }
-    .nav li { margin-left: 30px; }
-    .nav a {
+
+    /* ======== SỬA LỖI NAV ======== */
+    .nav {
+      flex-grow: 1; /* Cho nav chiếm không gian */
+      display: flex;
+      justify-content: flex-end; /* Đẩy menu về bên phải */
+    }
+    .nav-links {
+      list-style: none;
+      display: flex; /* Hiển thị menu ngang */
+      flex-direction: row;
+    }
+    .nav-links li { 
+      margin-left: 30px; 
+    }
+    .nav-links a {
       text-decoration: none;
       color: var(--text-secondary);
       font-weight: 500;
       transition: var(--transition);
     }
-    .nav a:hover, .nav a.active { color: var(--text-primary); }
+    .nav-links a:hover, .nav-links a.active { color: var(--text-primary); }
+    
     .theme-toggle {
       background: none;
       border: none;
@@ -110,9 +123,21 @@
       font-size: 1.2rem;
       cursor: pointer;
       transition: var(--transition);
+      margin-left: 20px; /* Thêm khoảng cách */
     }
     .theme-toggle:hover { color: var(--accent); }
-    .mobile-menu { display: none; }
+    
+    .mobile-menu {
+      display: none; /* Ẩn nút mobile trên desktop */
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 1.5rem;
+      cursor: pointer;
+      margin-left: 15px;
+    }
+    /* ======== KẾT THÚC SỬA LỖI NAV ======== */
+
 
     /* Hero */
     .hero {
@@ -450,30 +475,39 @@
       margin-top: 30px;
     }
     
-    /* Responsive */
+    /* ======== SỬA LỖI RESPONSIVE ======== */
     @media (max-width: 768px) {
-      .nav {
+      .nav-links {
         position: fixed;
         top: 70px;
-        left: -100%;
+        left: -100%; /* Ẩn về bên trái */
         width: 100%;
         height: 100vh;
         background: var(--bg-light);
-        flex-direction: column;
+        flex-direction: column; /* Xếp dọc */
         align-items: center;
         padding-top: 50px;
         transition: var(--transition);
+        visibility: hidden; 
+        opacity: 0;
       }
-      .nav.active { left: 0; }
-      .nav li { margin: 20px 0; }
+      .nav-links.active { /* Khi active thì hiện ra */
+        left: 0; 
+        visibility: visible;
+        opacity: 1;
+      }
+      .nav-links li { 
+        margin: 20px 0; /* Cách đều các mục menu */
+      }
       .mobile-menu {
-        display: block;
-        background: none;
-        border: none;
-        color: var(--text-secondary);
-        font-size: 1.5rem;
-        cursor: pointer;
+        display: block; /* Hiển thị nút mobile */
       }
+      
+      .nav {
+          flex-grow: 0; /* Không cho nav chiếm không gian nữa */
+      }
+
+      /* Các style responsive khác */
       .hero h1 { font-size: 2.5rem; }
       .hero .subtitle { font-size: 1.2rem; }
       .section-title { font-size: 2rem; }
@@ -491,9 +525,9 @@
   <header>
     <div class="container">
       <a href="#hero" class="logo">PHAM QUANG THANG</a>
+      
       <nav class="nav">
-        <ul>
-          <li><a href="#about">About</a></li>
+        <ul class="nav-links"> <li><a href="#about">About</a></li>
           <li><a href="#experience">Experience</a></li>
           <li><a href="#projects">Projects</a></li>
           <li><a href="#certificates">Certificates</a></li>
@@ -502,10 +536,15 @@
           <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
+      
       <button class="theme-toggle">
         <i class="fas fa-moon"></i>
       </button>
-      </div>
+      
+      <button class="mobile-menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
   </header>
 
   <section class="hero" id="hero">
@@ -658,7 +697,7 @@
         <div class="skill-category">
           <h3><i class="fas fa-globe"></i> Languages</h3>
           <ul>
-            <li><i class="fas fa-check"></i>English (Basic, able to read documents)</li>
+            <li><i class="fas fa="check"></i>English (Basic, able to read documents)</li>
             <li><i class="fas fa-check"></i>Vietnamese (Native)</li>
           </ul>
         </div>
@@ -707,70 +746,66 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Smooth scrolling
-      document.querySelectorAll('.nav a').forEach(a => {
-        a.addEventListener('click', function(e) {
-          e.preventDefault();
-          document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
-          if(document.querySelector('.nav').classList.contains('active')) {
-            document.querySelector('.nav').classList.remove('active');
-          }
-        });
-      });
-
-      // Reveal sections on scroll
-      const sections = document.querySelectorAll('section, footer');
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.1 });
-      sections.forEach(s => observer.observe(s));
-
-      // Theme Toggle
+      // Tìm các element một lần
+      const navLinks = document.querySelector('.nav-links');
+      const mobileMenuBtn = document.querySelector('.mobile-menu');
       const themeToggle = document.querySelector('.theme-toggle');
       const body = document.body;
-      themeToggle.addEventListener('click', () => {
-        body.classList.toggle('light-theme');
-        const icon = themeToggle.querySelector('i');
-        icon.classList.toggle('fa-moon');
-        icon.classList.toggle('fa-sun');
-      });
+      const sections = document.querySelectorAll('section, footer');
 
-      // Mobile Menu
-      const createMobileMenu = () => {
-        const header = document.querySelector('header .container');
-        const nav = document.querySelector('.nav');
-        const mobileMenuBtn = document.createElement('button');
-        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-        mobileMenuBtn.className = 'mobile-menu';
-        // Sửa lỗi: chèn vào trước nút theme
-        header.insertBefore(mobileMenuBtn, document.querySelector('.theme-toggle'));
+      // 1. Smooth scrolling và đóng menu mobile
+      if (navLinks) {
+        navLinks.querySelectorAll('a').forEach(a => {
+          a.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+            
+            // Đóng menu mobile sau khi click
+            if (navLinks.classList.contains('active')) {
+              navLinks.classList.remove('active');
+              if (mobileMenuBtn) {
+                  mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+                  mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+              }
+            }
+          });
+        });
+      }
 
+      // 2. Reveal sections on scroll
+      if (sections.length > 0) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1 });
+        sections.forEach(s => observer.observe(s));
+      }
+
+      // 3. Theme Toggle
+      if (themeToggle && body) {
+        themeToggle.addEventListener('click', () => {
+          body.classList.toggle('light-theme');
+          const icon = themeToggle.querySelector('i');
+          icon.classList.toggle('fa-moon');
+          icon.classList.toggle('fa-sun');
+        });
+      }
+
+      // 4. Mobile Menu Toggle
+      if (mobileMenuBtn && navLinks) {
         mobileMenuBtn.addEventListener('click', () => {
-          nav.classList.toggle('active');
+          navLinks.classList.toggle('active');
           const icon = mobileMenuBtn.querySelector('i');
           icon.classList.toggle('fa-bars');
           icon.classList.toggle('fa-times');
         });
-      };
+      }
       
-      // Xử lý logic mobile menu chính xác hơn
-      const handleMobileMenu = () => {
-          if (window.innerWidth <= 768 && !document.querySelector('.mobile-menu')) {
-              createMobileMenu();
-          } else if (window.innerWidth > 768 && document.querySelector('.mobile-menu')) {
-              document.querySelector('.mobile-menu').remove();
-              document.querySelector('.nav').classList.remove('active');
-          }
-      };
-      
-      handleMobileMenu(); // Chạy khi tải trang
-      window.addEventListener('resize', handleMobileMenu); // Chạy khi thay đổi kích thước
-
+      // Không cần logic resize, CSS @media đã xử lý việc này
     });
   </script>
 </body>
