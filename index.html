@@ -39,15 +39,6 @@
       --border: rgba(0, 0, 0, 0.1);
       --card-shadow: 0 4px 16px rgba(0,0,0,0.1);
     }
-    .profile-pic {
-        width: 180px;
-        height: 180px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 4px solid var(--accent);
-        margin-bottom: 30px;
-        box-shadow: 0 0 20px rgba(0, 216, 255, 0.3);
-    }
 
     /* Layout */
     .container {
@@ -91,18 +82,18 @@
       font-weight: 700;
       color: var(--accent);
       text-decoration: none;
-      flex-shrink: 0; /* Không cho logo bị co lại */
+      flex-shrink: 0; 
     }
 
-    /* ======== SỬA LỖI NAV ======== */
+    /* CSS Sửa lỗi NAV (Đã fix) */
     .nav {
-      flex-grow: 1; /* Cho nav chiếm không gian */
+      flex-grow: 1; 
       display: flex;
-      justify-content: flex-end; /* Đẩy menu về bên phải */
+      justify-content: flex-end; 
     }
     .nav-links {
       list-style: none;
-      display: flex; /* Hiển thị menu ngang */
+      display: flex; 
       flex-direction: row;
     }
     .nav-links li { 
@@ -123,12 +114,12 @@
       font-size: 1.2rem;
       cursor: pointer;
       transition: var(--transition);
-      margin-left: 20px; /* Thêm khoảng cách */
+      margin-left: 20px; 
     }
     .theme-toggle:hover { color: var(--accent); }
     
     .mobile-menu {
-      display: none; /* Ẩn nút mobile trên desktop */
+      display: none; 
       background: none;
       border: none;
       color: var(--text-secondary);
@@ -136,8 +127,6 @@
       cursor: pointer;
       margin-left: 15px;
     }
-    /* ======== KẾT THÚC SỬA LỖI NAV ======== */
-
 
     /* Hero */
     .hero {
@@ -145,7 +134,7 @@
       display: flex;
       align-items: center;
       text-align: center;
-      padding-top: 70px; /* Header height */
+      padding-top: 70px; 
     }
     .hero h1 {
       font-size: 3.5rem;
@@ -312,7 +301,6 @@
         margin-bottom: 5px;
     }
 
-
     /* Projects */
     .project-grid {
       display: grid;
@@ -475,36 +463,36 @@
       margin-top: 30px;
     }
     
-    /* ======== SỬA LỖI RESPONSIVE ======== */
+    /* CSS Sửa lỗi Responsive */
     @media (max-width: 768px) {
       .nav-links {
         position: fixed;
         top: 70px;
-        left: -100%; /* Ẩn về bên trái */
+        left: -100%; 
         width: 100%;
         height: 100vh;
         background: var(--bg-light);
-        flex-direction: column; /* Xếp dọc */
+        flex-direction: column; 
         align-items: center;
         padding-top: 50px;
         transition: var(--transition);
         visibility: hidden; 
         opacity: 0;
       }
-      .nav-links.active { /* Khi active thì hiện ra */
+      .nav-links.active { 
         left: 0; 
         visibility: visible;
         opacity: 1;
       }
       .nav-links li { 
-        margin: 20px 0; /* Cách đều các mục menu */
+        margin: 20px 0; 
       }
       .mobile-menu {
-        display: block; /* Hiển thị nút mobile */
+        display: block; 
       }
       
       .nav {
-          flex-grow: 0; /* Không cho nav chiếm không gian nữa */
+          flex-grow: 0; 
       }
 
       /* Các style responsive khác */
@@ -550,11 +538,9 @@
   <section class="hero" id="hero">
     <div class="container">
       <h1>PHAM QUANG THANG</h1>
-      <p class="subtitle">Network Administration Student & Presales Intern</p>
+      <p class="subtitle">Network Administration Student</p>
       <p>
-        During my internship, I aim to practice and enhance my professional skills, especially in areas such as computer networking and penetration testing. 
-        I also expect to directly participate in real-world tasks to gain a deeper understanding of operational processes in a professional IT environment. 
-        Furthermore, I hope to have the opportunity to become a full-time employee, thereby contributing to the company’s overall growth.
+        During my internship, I aim to practice and enhance my professional skills, especially in areas such as computer networking and penetration testing. I also expect to directly participate in real-world tasks to gain a deeper understanding of operational processes in a professional IT environment.
       </p>
       <a href="#projects" class="btn btn-primary">View My Projects</a>
       <a href="#certificates" class="btn btn-secondary">View My Certificates</a>
@@ -564,9 +550,9 @@
   <section id="about">
     <div class="container">
       <h2 class="section-title">About Me</h2>
-      <img src="PQT.jpg" alt="Pham Quang Thang" class="profile-pic">
+      
       <p>
-        I am a dedicated student pursuing a degree in Network Administration with hands-on experience as a Presales Intern and Teaching Assistant. 
+        I am a dedicated student pursuing a degree in Network Administration with hands-on experience as a Presales Intern and Teaching Assistant.
         I am passionate about network design, security, and gaining practical skills in real-world IT environments.
       </p>
       <ul class="contact-info">
@@ -585,13 +571,13 @@
         <div class="timeline-item">
           <div class="timeline-content">
             <h3>Presales Intern</h3>
-            <div class="date">09/2025 – 09/2026 | AZT VIET NAM TECHNOLOGY</div>
+            <div class="date">09/2025 – 09/2026 | AZT VIET NAM TECHNOLOGY COMPANY LIMITED</div>
             <ul>
                 <li>Assisted in preparing and reviewing bidding documents.</li>
-                <li>Participated in tender projects, including document preparation and submission.</li>
+                <li>Participated in tender projects, including document preparation, submission, and follow-up.</li>
                 <li>Involved in designing Data Center architecture.</li>
-                <li>Led a team of interns to design, configure, and deploy the company’s internal network.</li>
-                <li>Configured Routers, Layer 3 Switches, Firewalls, Access Points, and Servers.</li>
+                <li>Led a team of interns to design, configure, and deploy the company’s internal network infrastructure.</li>
+                <li>Configured core networking devices (Routers, Layer 3 Switches, Firewalls, Access Points, and Servers).</li>
                 <li>Installed and managed IP Camera system.</li>
             </ul>
           </div>
@@ -603,7 +589,7 @@
             <div class="date">05/2025 - Present | Lecturer: Nguyen Tran Thanh</div>
             <ul>
                 <li>Assisted and answered questions for students.</li>
-                <li>Guided students on configuring Labs during the course.</li>
+                <li>Guided students on configuring Labs.</li>
                 <li>Supported the lecturer in building Lab exercises.</li>
             </ul>
           </div>
@@ -611,11 +597,11 @@
 
         <div class="timeline-item">
           <div class="timeline-content">
-            <h3>Teaching Assistant - AI Training Course</h3>
+            <h3>Teaching Assistant - Training course on using AI</h3>
             <div class="date">08/2025 | Lecturer: Nguyen Tran Thanh</div>
             <ul>
                 <li>Assisted in installing AI applications for Hai Phong customs officers.</li>
-                <li>Supported in creating prompts and familiarizing staff with AI.</li>
+                <li>Supported in creating prompts and familiarizing staff with the application.</li>
                 <li>Helped answer questions for customs officers.</li>
             </ul>
           </div>
@@ -631,10 +617,10 @@
       <div class="project-grid">
         <div class="card">
           <div class="card-content">
-            <h3>Network System Design for Electric Power University</h3>
+            <h3>Designing and simulating the network system of Electric Power University</h3>
             <p>
-              A simulation project to design and implement a simple yet highly efficient network system, 
-              including a backup network path to ensure continuous operation.
+              Designed and implemented a simple yet highly efficient network system.
+              The system includes a backup network path to ensure continuous operation.
             </p>
             <div class="tags">
               <span class="tag">VLAN</span>
@@ -656,7 +642,7 @@
           </div>
         </div>
         
-        </div>
+      </div>
     </div>
   </section>
 
@@ -667,7 +653,7 @@
         <li><strong>Oracle Cloud Infrastructure 2025 Certified Generative AI Professional</strong> (2025)</li>
         <li><strong>Oracle Cloud Infrastructure 2025 Certified AI Foundations Associate</strong> (2025)</li>
         <li><strong>Oracle AI Vector Search Certified Professional</strong> (2025)</li>
-        <li><strong>Completed CEH course</strong> - IPMAC (2025)</li>
+        <li><strong>Completed in CEH course</strong> - IPMAC (2025)</li>
         <li><strong>Completed CCNA course</strong> - IPMAC (2024)</li>
         <li><strong>IELTS: 5.5</strong> (2021)</li>
       </ul>
@@ -684,7 +670,8 @@
             <li><i class="fas fa-check"></i>Pentest Tools (Nmap, Metasploit, Dirsearch)</li>
             <li><i class="fas fa-check"></i>Simulation (Cisco Packet Tracer, Pnetlab)</li>
             <li><i class="fas fa-check"></i>Device Configuration (CLI, Website)</li>
-            <li><i class="fas fa-check"></i>Basic C++</li>
+            <li><i class="fas fa-check"></i>Basic Linux and Windows administration</li>
+            <li><i class="fas fa-check"></i>Basic C/C++, Python</li>
           </ul>
         </div>
         <div class="skill-category">
@@ -697,7 +684,7 @@
         <div class="skill-category">
           <h3><i class="fas fa-globe"></i> Languages</h3>
           <ul>
-            <li><i class="fas fa="check"></i>English (Basic, able to read documents)</li>
+            <li><i class="fas fa-check"></i>English (Basic, able to read documents)</li>
             <li><i class="fas fa-check"></i>Vietnamese (Native)</li>
           </ul>
         </div>
@@ -709,7 +696,7 @@
     <div class="container">
       <h2 class="section-title">Education</h2>
       <div class="education-item">
-        <h3>Electric Power University, Ha Noi</h3>
+        <h3>Electtric Power University, Ha Noi</h3>
         <p><strong>Major:</strong> Network Administration</p>
         <p><strong>Expected Graduation:</strong> 2026</p>
         <p><strong>GPA:</strong> 3.0 / 4.0</p>
@@ -758,7 +745,10 @@
         navLinks.querySelectorAll('a').forEach(a => {
           a.addEventListener('click', function(e) {
             e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+            const targetElement = document.querySelector(this.getAttribute('href'));
+            if (targetElement) {
+              targetElement.scrollIntoView({ behavior: 'smooth' });
+            }
             
             // Đóng menu mobile sau khi click
             if (navLinks.classList.contains('active')) {
@@ -804,10 +794,7 @@
           icon.classList.toggle('fa-times');
         });
       }
-      
-      // Không cần logic resize, CSS @media đã xử lý việc này
     });
   </script>
 </body>
 </html>
-
